@@ -7,27 +7,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-
 ## Module 4
 
 These are my records and notes of Module 4.
@@ -120,7 +99,7 @@ This is way too complicated to know if I got the heirarchy right. There has to b
 
 ###challenge 5
 Store the following numbers as a 5 x 3 matrix: 3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2. Be sure to fill the matrix ROWWISE.
-```{r matrix}
+```{r matrix2}
 d<- c(3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2)
 mat<- matrix(data=d, 5, 3, byrow=TRUE)
 mat
