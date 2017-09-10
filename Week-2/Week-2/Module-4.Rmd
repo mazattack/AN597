@@ -26,3 +26,52 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Module 4
+
+These are my records and notes of Module 4.
+
+### Challenge 1:
+First, create a vector of 1 word character strings comprising the first line of the Ulysses, by James Joyce: “Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.”
+
+
+1. rename sentence 
+2. remove punctuation
+3. Split sting, "strsplit"
+
+```{r split}
+x<-"Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed." #must use R quotes not sentence quotes
+x2<-((gsub("[[:punct:]]","",x))) #does not remove quote marks
+xspt<-c(unlist(strsplit(x2," "))) #creates as a list, so used unlist function
+```
+
+Then, extract every third element of this vector.
+```{r extract}
+extract<- xspt[seq(from=3, to=22, by = 3)]
+```
+
+HOORAY!
+
+###Challenge 2
+
+```{r matrix, echo=TRUE}
+m <- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE)
+m
+```
+1. Given the matrix, m, above, extract the 2nd, 3rd, and 6th columns and assign them to the variable x
+```{r extract columns}
+x<-m[,c(2,3,6)]
+x
+```
+2.Given the matrix, m, above, extract the 6th to 8th row and assign them to the variable x
+```{r extract rows}
+x<-m[c(6:8),]
+x
+```
+
+3. Given the matrix, m, above, extract the elements from row 2, column 2 to row 6, column 9 and assign them to the variable x
+```{r extract matrix}
+x<-m[c(2:6),c(2:9)]
+x
+```
