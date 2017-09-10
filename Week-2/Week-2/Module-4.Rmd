@@ -44,11 +44,13 @@ First, create a vector of 1 word character strings comprising the first line of 
 x<-"Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed." #must use R quotes not sentence quotes
 x2<-((gsub("[[:punct:]]","",x))) #does not remove quote marks
 xspt<-c(unlist(strsplit(x2," "))) #creates as a list, so used unlist function
+xspt
 ```
 
 Then, extract every third element of this vector.
 ```{r extract}
 extract<- xspt[seq(from=3, to=22, by = 3)]
+extract
 ```
 
 HOORAY!
