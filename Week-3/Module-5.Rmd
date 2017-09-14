@@ -1,0 +1,32 @@
+---
+title: "Module-5"
+output: html_document
+---
+
+###CHALLENGE:
+
+Load the Country-Data-2016 dataset into a data frame variable, d, and summarize the variables in that data frame. You can load the file any way you want, e.g., load from a local file, or you can access the data straight from GitHub, as in the code below.
+```{r read}
+cd2016<-read.csv("country-data-2016_csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+head(cd2016)
+summary(cd2016)
+names(cd2016)
+```
+What are the median area and population size of all countries in the dataset? HINT: There are a couple of ways to do this… try summary() and median() (for the latter, you’ll need to use the na.rm = TRUE argument)
+
+```{r}
+D<-tbl_df(cd2016)
+Dsum<-summarize(D, median(area, na.rm=TRUE),   median(population, na.rm=TRUE))
+Dsum
+```
+
+Create a new pop_density variable in your data frame which is population / area. What are the 10 most dense countries? The 10 least dense? HINT: check out the order() function
+
+```{r density}
+Ddens<-mutate(D, pop_density=population/area)
+select(Ddens, population, area, pop_density)
+aDdens<-arrange(Ddens, pop_density)
+aDdens[1:10,]
+aDdens<-arrange(Ddens, desc(pop_density))
+aDdens[1:10,]
+```
