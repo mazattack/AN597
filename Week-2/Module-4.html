@@ -357,143 +357,39 @@ a</code></pre>
 <h3>challenge 4</h3>
 <p>Create a list representing this (simplified) primate taxonomy. HINT: you can use lists as elements in a list.</p>
 <pre class="r"><code>Plat&lt;-c(&quot;Cebidae&quot;, &quot;Atelidae&quot;, &quot;Pitheciidae&quot;)
-Plat</code></pre>
-<pre><code>## [1] &quot;Cebidae&quot;     &quot;Atelidae&quot;    &quot;Pitheciidae&quot;</code></pre>
-<pre class="r"><code>Cat&lt;- c(&quot;Cercopithecidae&quot;,&quot;Hylobatidae&quot;,&quot;Hominidae&quot;)
-Cat</code></pre>
-<pre><code>## [1] &quot;Cercopithecidae&quot; &quot;Hylobatidae&quot;     &quot;Hominidae&quot;</code></pre>
-<pre class="r"><code>Tar&lt;-c(&quot;Tarsiidae&quot;)
-Tar</code></pre>
-<pre><code>## [1] &quot;Tarsiidae&quot;</code></pre>
-<pre class="r"><code>Anth&lt;-list(list(&quot;Platyrrhini&quot;, Plat), list(&quot;Catarrhini&quot;, Cat))
-Anth</code></pre>
-<pre><code>## [[1]]
-## [[1]][[1]]
-## [1] &quot;Platyrrhini&quot;
-## 
-## [[1]][[2]]
+Cat&lt;- c(&quot;Cercopithecidae&quot;,&quot;Hylobatidae&quot;,&quot;Hominidae&quot;)
+Tar&lt;-c(&quot;Tarsiidae&quot;)
+Lor&lt;-c(&quot;Lorisidae&quot;, &quot;Galagidae&quot;)
+Lem&lt;-c(&quot;Cheirogaleidae&quot;, &quot;Lepilemuridae&quot;, &quot;Indriidae&quot;, &quot;Lemuridae&quot;, &quot;Daubentoniidae&quot;)
+Anth&lt;-list(Plat, Cat)
+names(Anth)&lt;-c(&quot;Platyrrhini&quot;,&quot;Catarrhini&quot;)
+Hap&lt;-list(Anth, Tar)
+names(Hap)&lt;-c(&quot;Anthropoidea&quot;, &quot;Tarsioidea&quot;)
+Strep&lt;-list(Lor, Lem)
+names(Strep)&lt;-c(&quot;Lorisoidea&quot;,&quot;Lemuroidea&quot;)
+primates&lt;-list(Hap, Strep)
+names(primates)&lt;-c(&quot;Haplorhini&quot;, &quot;Strepsirhini&quot;)
+primates</code></pre>
+<pre><code>## $Haplorhini
+## $Haplorhini$Anthropoidea
+## $Haplorhini$Anthropoidea$Platyrrhini
 ## [1] &quot;Cebidae&quot;     &quot;Atelidae&quot;    &quot;Pitheciidae&quot;
 ## 
-## 
-## [[2]]
-## [[2]][[1]]
-## [1] &quot;Catarrhini&quot;
-## 
-## [[2]][[2]]
-## [1] &quot;Cercopithecidae&quot; &quot;Hylobatidae&quot;     &quot;Hominidae&quot;</code></pre>
-<pre class="r"><code>Hap&lt;-list(list(&quot;Anthropoidea&quot;, Anth), list(&quot;Tarsioidea&quot;, Tar))
-Hap</code></pre>
-<pre><code>## [[1]]
-## [[1]][[1]]
-## [1] &quot;Anthropoidea&quot;
-## 
-## [[1]][[2]]
-## [[1]][[2]][[1]]
-## [[1]][[2]][[1]][[1]]
-## [1] &quot;Platyrrhini&quot;
-## 
-## [[1]][[2]][[1]][[2]]
-## [1] &quot;Cebidae&quot;     &quot;Atelidae&quot;    &quot;Pitheciidae&quot;
-## 
-## 
-## [[1]][[2]][[2]]
-## [[1]][[2]][[2]][[1]]
-## [1] &quot;Catarrhini&quot;
-## 
-## [[1]][[2]][[2]][[2]]
+## $Haplorhini$Anthropoidea$Catarrhini
 ## [1] &quot;Cercopithecidae&quot; &quot;Hylobatidae&quot;     &quot;Hominidae&quot;      
 ## 
 ## 
-## 
-## 
-## [[2]]
-## [[2]][[1]]
-## [1] &quot;Tarsioidea&quot;
-## 
-## [[2]][[2]]
-## [1] &quot;Tarsiidae&quot;</code></pre>
-<pre class="r"><code>Strep&lt;-list(list(&quot;Lorisoidea&quot;, c(&quot;Lorisidae&quot;, &quot;Galagidae&quot;)), list(&quot;Lemuroidea&quot;, c(&quot;Cheirogaleidae&quot;, &quot;Lepilemuridae&quot;, &quot;Indriidae&quot;, &quot;Lemuridae&quot;, &quot;Daubentoniidae&quot;)))
-Strep</code></pre>
-<pre><code>## [[1]]
-## [[1]][[1]]
-## [1] &quot;Lorisoidea&quot;
-## 
-## [[1]][[2]]
-## [1] &quot;Lorisidae&quot; &quot;Galagidae&quot;
-## 
-## 
-## [[2]]
-## [[2]][[1]]
-## [1] &quot;Lemuroidea&quot;
-## 
-## [[2]][[2]]
-## [1] &quot;Cheirogaleidae&quot; &quot;Lepilemuridae&quot;  &quot;Indriidae&quot;      &quot;Lemuridae&quot;     
-## [5] &quot;Daubentoniidae&quot;</code></pre>
-<pre class="r"><code>Tax&lt;- list(&quot;Primates&quot;, list(list(&quot;Haplorhini&quot;, Hap), list(&quot;Strepsirhini&quot;, Strep)))
-Tax          </code></pre>
-<pre><code>## [[1]]
-## [1] &quot;Primates&quot;
-## 
-## [[2]]
-## [[2]][[1]]
-## [[2]][[1]][[1]]
-## [1] &quot;Haplorhini&quot;
-## 
-## [[2]][[1]][[2]]
-## [[2]][[1]][[2]][[1]]
-## [[2]][[1]][[2]][[1]][[1]]
-## [1] &quot;Anthropoidea&quot;
-## 
-## [[2]][[1]][[2]][[1]][[2]]
-## [[2]][[1]][[2]][[1]][[2]][[1]]
-## [[2]][[1]][[2]][[1]][[2]][[1]][[1]]
-## [1] &quot;Platyrrhini&quot;
-## 
-## [[2]][[1]][[2]][[1]][[2]][[1]][[2]]
-## [1] &quot;Cebidae&quot;     &quot;Atelidae&quot;    &quot;Pitheciidae&quot;
-## 
-## 
-## [[2]][[1]][[2]][[1]][[2]][[2]]
-## [[2]][[1]][[2]][[1]][[2]][[2]][[1]]
-## [1] &quot;Catarrhini&quot;
-## 
-## [[2]][[1]][[2]][[1]][[2]][[2]][[2]]
-## [1] &quot;Cercopithecidae&quot; &quot;Hylobatidae&quot;     &quot;Hominidae&quot;      
-## 
-## 
-## 
-## 
-## [[2]][[1]][[2]][[2]]
-## [[2]][[1]][[2]][[2]][[1]]
-## [1] &quot;Tarsioidea&quot;
-## 
-## [[2]][[1]][[2]][[2]][[2]]
+## $Haplorhini$Tarsioidea
 ## [1] &quot;Tarsiidae&quot;
 ## 
 ## 
-## 
-## 
-## [[2]][[2]]
-## [[2]][[2]][[1]]
-## [1] &quot;Strepsirhini&quot;
-## 
-## [[2]][[2]][[2]]
-## [[2]][[2]][[2]][[1]]
-## [[2]][[2]][[2]][[1]][[1]]
-## [1] &quot;Lorisoidea&quot;
-## 
-## [[2]][[2]][[2]][[1]][[2]]
+## $Strepsirhini
+## $Strepsirhini$Lorisoidea
 ## [1] &quot;Lorisidae&quot; &quot;Galagidae&quot;
 ## 
-## 
-## [[2]][[2]][[2]][[2]]
-## [[2]][[2]][[2]][[2]][[1]]
-## [1] &quot;Lemuroidea&quot;
-## 
-## [[2]][[2]][[2]][[2]][[2]]
+## $Strepsirhini$Lemuroidea
 ## [1] &quot;Cheirogaleidae&quot; &quot;Lepilemuridae&quot;  &quot;Indriidae&quot;      &quot;Lemuridae&quot;     
 ## [5] &quot;Daubentoniidae&quot;</code></pre>
-<p>This is way too complicated to know if I got the heirarchy right. There has to be an easier way</p>
 </div>
 <div id="challenge-5" class="section level3">
 <h3>challenge 5</h3>
