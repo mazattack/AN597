@@ -1,0 +1,311 @@
+---
+title: "Module-6"
+output: html_document
+---
+```{r load}
+library(dplyr)
+library(ggplot2)
+```
+###CHALLENGE:
+
+Load the Country-Data-2016 dataset into a data frame variable, d, and summarize the variables in that data frame. You can load the file any way you want, e.g., load from a local file, or you can access the data straight from GitHub, as in the code below.
+```{r read}
+cd2016<-read.csv("country-data-2016_csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+head(cd2016)
+summary(cd2016)
+names(cd2016)
+```
+What are the median area and population size of all countries in the dataset? HINT: There are a couple of ways to do this… try summary() and median() (for the latter, you’ll need to use the na.rm = TRUE argument)
+
+```{r}
+D<-tbl_df(cd2016)
+Dsum<-summarize(D, median(area, na.rm=TRUE),   median(population, na.rm=TRUE))
+Dsum
+```
+
+Create a new pop_density variable in your data frame which is population / area. What are the 10 most dense countries? The 10 least dense? HINT: check out the order() function
+
+```{r density}
+Ddens<-mutate(D, pop_density=population/area)
+select(Ddens, population, area, pop_density)
+aDdens<-arrange(Ddens, pop_density)
+aDdens[1:10,]
+aDdens<-arrange(Ddens, desc(pop_density))
+aDdens[1:10,]
+```
+
+Extract data from the 20 largest countries into a new variable. What are the median area and population size of these countries?
+Extract data from all countries beginning with the letters “A” through “F”. What are the mean area and population size of these countries?
+
+```{r means}
+largecountry <-Ddens %>%
+  arrange(desc(area)) %>% #here taking "largest" in terms of area
+  top_n (n = 20, wt = area)%>% #when using top_n, it will select the top n of selected variable (wt), but will not arrange in order, so arrange is still necessary
+  summary%>%
+  print
+```
+
+```{r means2}
+a_f_country <-Ddens[grep("^[A-F]", D$country), ] %>% 
+  summary %>%
+  print
+```
+
+###CHALLENGE:
+
+Make boxplots of the raw population and area data, then do the same after log() transforming these variables.
+
+```{r boxplot}
+par(mfrow= c(2, 3))
+boxplot(Ddens$population)# returns a NAs produced by integer overflow error
+boxplot(log(Ddens$population))
+boxplot(Ddens$area)
+boxplot(log(Ddens$area))
+barplot(Ddens$population)
+barplot(Ddens$area)
+
+```
+###CHALLENGE:
+
+Make histograms of the log() transformed population and area data from the Country-Data-2016 file. Explore what happens if you set  freq=FALSE versus the default of freq=TRUE. Try looking at other variables as well.
+
+
+```{r hist}
+par(mfrow= c(2, 3))
+hist(log(Ddens$population))
+hist(log(Ddens$population), freq=FALSE)
+
+```
+
+```{r hist2}
+par(mfrow = c(1, 2))  # gives us two panels
+attach(Ddens)
+hist(log(population), freq = FALSE, col = "purple", main = "Plot 1", xlab = "log(population size)", 
+    ylab = "density", ylim = c(0, 0.2))
+abline(v=mean(log(population), na.rm=TRUE)) #this has to go on its own line?
+hist(log(area), freq = FALSE, col = "green", main = "Plot 2", xlab = "log(area)", 
+    ylab = "density", ylim = c(0, 0.2))
+lines(density(log(area), na.rm = TRUE), col = "red")
+detach(Ddens)
+```
+
+Using the table() function, find what is the most common form of government in the Country-Data-2016 dataset. How many countries have that form? HINT: We can combine table() with sort() and the argument decreasing=TRUE to get the desired answered straight away:
+```{r}
+sort(table(Ddens$govt_form), decreasing = TRUE)
+```
+
+
+```{r}
+kam<-read.csv("KamilarAndCooperData_csv", sep=",", header=TRUE, stringsAsFactors = FALSE)
+head(kam)
+summary(kam)
+```
+
+CHALLENGE:
+
+Read in the dataset KamilarAndCooperData, which contains a host of summary information about 213 primate species.
+
+Spend some time exploring the data and then make boxplots of log(female body mass) ~ family. Try doing this with {base} graphics and then look at how we might do in in {ggplot2}, which provides a standard “grammar of graphics” (see the {ggplot2} documentation)
+
+
+
+```{r}
+attach (kam)
+boxplot(log(Body_mass_female_mean)~Family)
+detach(kam)
+```
+
+
+
+```{r}
+p <- ggplot(data = kam, aes(x = Family, y = log(Body_mass_female_mean)))
+p <- p + geom_boxplot()
+p <- p + theme(axis.text.x = element_text(angle = 90))
+p <- p + ylab("log(Female Body Mass)")
+p
+```
+Again using data from the KamilarAndCooperData dataset, plot the relationship between female body size and female brain size. Then, play with log transforming the data and plot again.
+```{r}
+d<-kam
+attach(d)
+par(mfrow = c(1, 2))
+plot(x = Body_mass_female_mean, y = Brain_Size_Female_Mean)
+plot(x = log(Body_mass_female_mean), y = log(Brain_Size_Female_Mean))
+```
+
+```{r}
+p <- ggplot(data = d, aes(x = log(Body_mass_female_mean), y = log(Brain_Size_Female_Mean), 
+    color = factor(Family)))  # first, we build a plot object and color points by Family
+p <- p + xlab("log(Female Body Mass)") + ylab("log(Female Brain Size)")  # then we modify the axis labels
+p <- p + geom_point()  # then we make a scatterplot
+p <- p + theme(legend.position = "bottom", legend.title = element_blank())  # then we modify the legend
+p  # and, finally, we plot the object
+```
+
+```{r}
+p <- p + facet_wrap(~Family, ncol = 4)
+p <- p + theme(legend.position = "none")
+p
+```
+
+```{r}
+p <- p + geom_smooth(method = "lm", fullrange = TRUE)
+p
+```
+CHALLENGE:
+
+Build your own bivariate scatterplot using the KamilarAndCooperData dataset.
+```{r}
+p<- ggplot (data=d, aes(x=Mass_Dimorphism, y= MeanGroupSize, 
+                        color=factor(Family)))
+p<-p+xlab("M:F body mass ratio") +ylab("Mean group size")
+p<-p+geom_point()
+p <- p + theme(legend.position = "bottom", legend.title = element_blank())
+p
+```
+
+```{r}
+aggregate(d$Body_mass_female_mean ~ d$Family, FUN = "mean", na.rm = TRUE)
+
+s <- filter(d, Family == "Hominidae" & Mass_Dimorphism > 2)
+head(s)
+
+```
+# Module 7
+
+```{r geo_mean}
+library(sciplot)
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50, 100, 200, 1000)
+gm1 <- function(x) {
+    prod(x)^(1/length(x))
+}
+gm1(x)
+```
+
+```{r sum of squares}
+ss1 <- function(x) {
+    sum((x - mean(x))^2)
+}
+ss1(x)
+```
+
+```{r pop variance}
+pop_v <- function(x) {
+    sum((x - mean(x))^2)/(length(x))
+}
+pop_v(x)
+```
+
+```{r sample variance} 
+sample_v <- function(x) {
+    sum((x - mean(x))^2)/(length(x) - 1)
+}
+sample_v(x)
+
+```
+
+```{r}
+plot(c(0, 50), c(0, 15), type = "n", xlab = "Sample size", ylab = "Variance")
+#[2] Create a random variable drawn from a normal distribution using the rnorm() function. Let’s use for loops to do this for samples of size 5, 10, 15… up to 50, with 50 replicates at each size. The structure for for loops is…
+#for (counter in vector){code to run}
+for (n in seq(5, 50, 5)) # samples of 5, 10, 15...
+{
+    for (i in 1:50) # 50 replicates
+    {
+        x <- rnorm(n, mean = 10, sd = 2)
+        points(n, var(x))
+    }
+}
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50, 100, 200, 1000)
+```
+```{r pop sd}
+pop_sd <- function(x) {
+    sqrt(pop_v(x))
+}
+pop_sd(x)
+```
+
+```{r sample sd}
+sample_sd <- function(x) {
+    sqrt(sample_v(x))
+}
+sample_sd(x)#in module answers, x is based on random number generated in plot.
+```
+
+
+```{r standard error of mean}
+SE1 <- function(x) {
+    sqrt(sample_v(x)/length(x))
+}
+SE1(x)
+```
+```{r}
+set.seed(1)
+x <- rnorm(10000, 0, 1)
+hist(x)
+```
+```{r}
+x <- seq(from = -4, to = 4, by = 0.01)
+plot(x, dnorm(x), cex = 0.4)
+```
+
+```{r}
+plot(x, pnorm(x), cex = 0.4)
+x <- seq(from = 0, to = 1, by = 0.01)
+plot(qnorm(x), x, cex = 0.4)
+
+```
+```{r}
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+m <- mean(x)
+n <- length(x)
+v <- var(x)
+s <- sd(x)
+e <- sqrt(v/n)
+upper <- mean(x) + qnorm(0.975, mean = 0, sd = 1) * se(x)
+lower <- mean(x) + qnorm(0.025, mean = 0, sd = 1) * se(x)  # or lower <- mean(x) - qnorm(0.975)*se(x)
+ci <- c(lower, upper)
+ci
+
+```
+
+
+```{r}
+
+set <- NULL  # sets up a dummy variable to hold our 10000 simulations
+n <- 100
+for (i in 1:10000) {
+    set[i] <- mean(sample(x, n, replace = TRUE))
+}
+
+quantile(set, c(0.025, 0.975))
+```
+
+```
+```{r}
+
+
+```
+
+```
+```{r}
+
+
+```
+```
+```{r}
+
+
+```
+
+
+```
+```{r}
+
+
+```
+```
+```{r}
+
+
+```
