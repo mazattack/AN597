@@ -1,7 +1,10 @@
 ---
 title: "Homework2"
-author: Maria C. Codlin
-output: html_document
+author: "Maria C. Codlin"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
 ---
 
 #Homework 2
