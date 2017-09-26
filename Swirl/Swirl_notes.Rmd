@@ -12,3 +12,24 @@ http://vita.had.co.nz/papers/tidy-data.pdf
 | 2) Each observation forms a row
 | 
 | 3) Each type of observational unit forms a table
+
+| GGPlot2_Part1. (Slides for this and other Data Science courses may be found at github
+| https://github.com/DataScienceSpecialization/courses/. If you care to use them, they must be downloaded as a zip file and
+| viewed locally. This lesson corresponds to 04_ExploratoryAnalysis/ggplot2.)
+ http://ggplot2.org provides complete documentation.
+ 
+ 
+ | We'll do two plots, a scatterplot and then a histogram, each with 3 facets. For the scatterplot, call qplot with 4
+| arguments. The first two are displ and hwy and the third is the argument data set equal to mpg. The fourth is the
+| argument facets which will be set equal to the expression . ~ drv which is ggplot2's shorthand for number of rows (to
+| the left of the ~) and number of columns (to the right of the ~). Here the . indicates a single row and drv implies
+| 3, since there are 3 distinct drive factors. Try this now.
+
+> qplot(displ, hwy, data=mpg, facets=.~drv)
+
+| Great job!
+
+
+qplot(drv, hwy, data=mpg, geom="boxplot", color=manufacturer)
+qplot(hwy, data=mpg, fill=drv)
+qplot(hwy, data=mpg, facets=drv~., binwidth=2)
