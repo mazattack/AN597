@@ -1,0 +1,24 @@
+---
+title: "Untitled"
+author: "Maria C. Codlin"
+date: "September 26, 2017"
+output: html_document
+---
+```{r}
+nrolls<-1000
+roll<-function(x) {
+  sample(1:6, x, replace=TRUE)
+  }
+two_dice<-roll(nrolls)+roll(nrolls)
+hist(two_dice, breaks=c(1.5:12.5), probability=TRUE, main="Rolling Two Dice", xlab="sum of rolls", ylab="probability")
+```
+
+```{r}
+nrolls <- 1000
+roll <- function(x) {
+    sample(1:6, x, replace = TRUE)
+}
+two_dice <- roll(nrolls) + roll(nrolls)
+hist(two_dice, breaks = c(1.5:12.5), probability = TRUE, main = "Rolling Two Dice", 
+    xlab = "sum of rolls", ylab = "probability")
+```
