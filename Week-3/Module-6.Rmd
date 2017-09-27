@@ -172,7 +172,18 @@ s <- filter(d, Family == "Hominidae" & Mass_Dimorphism > 2)
 head(s)
 
 ```
+
+
+
+
+
+
+
+
+
+
 # Module 7
+
 
 ```{r geo_mean}
 library(sciplot)
