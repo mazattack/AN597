@@ -1,6 +1,8 @@
 ---
 title: "Homework2"
-output: html_document
+author: "Maria C. Codlin"
+output:
+  html_document: default
 ---
 
 #Homework 2
@@ -54,7 +56,7 @@ round(dpois(3, lambda=15),5) #dpois is exact while ppois is with tail
 ```
 ##Plot the relevant Poisson mass function over the values in range 0 ≤ x ≤ 30
 ```{r}
-barplot(dpois(x=0:30, lambda=15), ylim=c(0,0.15), space=0, names.arg=0:30, ylab="Probability", xlab="# of calls", col=rainbow(20))
+barplot(dpois(x=0:30, lambda=15), ylim=c(0,0.15), space=0, names.arg=0:30, ylab="Probability", xlab="# of calls", col=rainbow(50))
 ```
 
 ##Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions). Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?

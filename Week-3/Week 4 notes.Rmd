@@ -1,0 +1,101 @@
+---
+title: "R Notebook_module 7 class"
+output: html_notebook
+---
+
+NOTES: 
+variance - average deviation of each point from the mean. 
+
+sample variance = estimator of the population variance = sum of squares / (n - 1)
+
+In this formula, n - 1 is the number of degrees of freedom implied by the sample. The degrees of freedom is the number of values used to calculate a sample statistic that are free to vary. **We used n observations to calculate the mean of our sample, and that implies n - 1 degrees of freedom.** We use that statistic about our sample as an estimate of the population mean, which is used to derive an estimate of the population variance.
+
+
+sd() is the standard deviation of a *sample*
+
+unsure of se vs sd 
+SE mean = (sample standard deviation) / square root of (number of observations) like error on either side of the line. In regression, must always check the error
+
+
+BOOTSTRAPPING - for small sample sizes. If you can assume the normal type of distribution, you can run random subsets of your sample to artificially inflate the sample size for measures of centrality and spread. 
+
+POISSON and binomial/Bernoulli might be useful to me. Map out my data to see which one it fits. 
+```{r}
+library(sciplot)
+```
+
+```{r}
+plot(c(0, 50), c(0, 15), type = "n", xlab = "Sample size", ylab = "Variance")
+
+for (n in seq(5, 50, 5)) # samples of 5, 10, 15...
+{
+    for (i in 1:50) # 50 replicates
+    {
+        x <- rnorm(n, mean = 10, sd = 2)
+        points(n, var(x))
+    }
+}
+```
+
+```{r}
+set.seed(1)
+x <- rnorm(10000, 0, 1)
+hist(x)
+```
+```{r}
+qnorm(0.2, mean=0, sd=1)
+```
+```{r}
+x <- seq(from = -4, to = 4, by = 0.01)
+plot(x, dnorm(x), cex = 0.4)
+```
+```{r}
+x <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+m <- mean(x)
+n <- length(x)
+v <- var(x)
+s <- sd(x)
+e <- sqrt(v/n)
+upper <- mean(x) + qnorm(0.975, mean = 0, sd = 1) * se(x)
+lower <- mean(x) + qnorm(0.025, mean = 0, sd = 1) * se(x)  # or lower <- mean(x) - qnorm(0.975)*se(x)
+ci <- c(lower, upper)
+ci
+```
+```{r}
+normalCI = function(x, CIlevel = 0.95) {
+    upper = m + qnorm(1 - (1 - CIlevel)/2) * sqrt(var(x)/length(x))
+    lower = m + qnorm((1 - CIlevel)/2) * sqrt(var(x)/length(x))
+    ci <- c(lower, upper)
+    return(ci)
+}
+normalCI(x, 0.95)
+```
+
+
+```{r}
+normalCI(x, 0.90)
+```
+
+
+BOOTSTRAPPING - GOOD TO LEARN
+x is the data, n is a subset of x and running this 10000 and then putting that into the set data set. To boost sample size for a normal distribution. 
+```{r}
+set <- NULL  # sets up a dummy variable to hold our 10000 simulations
+n <- 15 
+for (i in 1:10000) {
+    set[i] <- mean(sample(x, n, replace = TRUE))
+}
+quantile (set, c(0.025, 0.975))
+```
+
+```{r}
+set2 <- NULL  # sets up a dummy variable to hold our 10000 simulations
+n <- 30 
+for (i in 1:10000) {
+    set2[i] <- mean(sample(x, n, replace = TRUE))
+}
+quantile (set2, c(0.025, 0.975))
+```
+
+
+

@@ -118,6 +118,7 @@ detach(kam)
 
 
 ```{r}
+library(ggplot2)
 p <- ggplot(data = kam, aes(x = Family, y = log(Body_mass_female_mean)))
 p <- p + geom_boxplot()
 p <- p + theme(axis.text.x = element_text(angle = 90))
@@ -171,7 +172,18 @@ s <- filter(d, Family == "Hominidae" & Mass_Dimorphism > 2)
 head(s)
 
 ```
+
+
+
+
+
+
+
+
+
+
 # Module 7
+
 
 ```{r geo_mean}
 library(sciplot)
@@ -281,31 +293,3 @@ for (i in 1:10000) {
 quantile(set, c(0.025, 0.975))
 ```
 
-```
-```{r}
-
-
-```
-
-```
-```{r}
-
-
-```
-```
-```{r}
-
-
-```
-
-
-```
-```{r}
-
-
-```
-```
-```{r}
-
-
-```
